@@ -45,7 +45,7 @@ def get_birthday_z():
 
 def get_words():
   # words = requests.get("https://api.shadiao.pro/chp")
-  words = requests.get("https://devapi.qweather.com/v7/indices/1d?location=121.48,31.40&key=cdf6c29c017144a49986d73463f868ca&type=3")
+  words = requests.get("https://devapi.qweather.com/v7/indices/1d?location=121.48,31.40&key=cdf6c29c017144a49986d73463f868ca&type=8")
   if words.status_code != 200:
     return get_words()
   # return words.json()['data']['text']
