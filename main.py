@@ -20,6 +20,27 @@ user_id = os.environ["USER_ID"]
 user_id_l = os.environ["USER_ID_L"]
 template_id = os.environ["TEMPLATE_ID"]
 
+def get_week_day(date):
+  week_day_dict = {
+      0: '星期一',
+      1: '星期二',
+      2: '星期三',
+      3: '星期四',
+      4: '星期五',
+      5: '星期六',
+      6: '星期天',
+  }
+  day_color_dict = {
+    0: '#999999',
+    1: '#999999',
+    2: '#999999',
+    3: '#999999',
+    4: '#ffc0cb',
+    5: '#ffc0cb',
+    6: '#ffc0cb',
+  }
+  day = date.weekday()
+  return week_day_dict[day], day_color_dict[day]
 
 def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
@@ -59,7 +80,8 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, low, high = get_weather()
-data = {"diqu":{"value":city},"tianqi":{"value":wea},"low":{"value":low},"high":{"value":high},"lianai":{"value":get_count()},"lshengri":{"value":get_birthday_l()},"zshengri":{"value":get_birthday_z()},"jinju":{"value":get_words(), "color":get_random_color()}}
+dayOfWeek, dayColor = get_week_day(today)
+data = {"riqi":{"value":dayOfWeek,"color":dayColor},"diqu":{"value":city},"tianqi":{"value":wea},"low":{"value":low},"high":{"value":high},"lianai":{"value":get_count()},"lshengri":{"value":get_birthday_l()},"zshengri":{"value":get_birthday_z()},"jinju":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 res = wm.send_template(user_id_l, template_id, data)
 print(res)
