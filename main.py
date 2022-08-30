@@ -46,7 +46,7 @@ def get_weather():
   url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
   res = requests.get(url).json()
   weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['low']), math.floor(weather['high'])
+  return weather['weather'], math.floor(weather['low']), math.floor(weather['high']), weather['humidity']
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -79,9 +79,9 @@ def get_random_color():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
-wea, low, high = get_weather()
+wea, low, high, humidity = get_weather()
 dayOfWeek, dayColor = get_week_day(today)
-data = {"riqi":{"value":dayOfWeek,"color":dayColor},"diqu":{"value":city},"tianqi":{"value":wea},"low":{"value":low},"high":{"value":high},"lianai":{"value":get_count()},"lshengri":{"value":get_birthday_l()},"zshengri":{"value":get_birthday_z()},"jinju":{"value":get_words(), "color":get_random_color()}}
+data = {"riqi":{"value":dayOfWeek,"color":dayColor},"diqu":{"value":city},"tianqi":{"value":wea},"shidu":{"value":humidity},"low":{"value":low},"high":{"value":high},"lianai":{"value":get_count()},"lshengri":{"value":get_birthday_l()},"zshengri":{"value":get_birthday_z()},"jinju":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 res = wm.send_template(user_id_l, template_id, data)
 print(res)
