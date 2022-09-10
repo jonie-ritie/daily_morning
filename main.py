@@ -1,5 +1,6 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import math
+from time import timezone
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
@@ -7,6 +8,7 @@ import os
 import random
 
 today = datetime.now()
+today = today + timedelta(hours=8) # 转北京时间
 start_date = os.environ['START_DATE']
 city = os.environ['CITY']
 
